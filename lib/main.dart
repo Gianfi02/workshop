@@ -17,14 +17,37 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: ShoppingList());
+    return MaterialApp(home: HomePage());
   }
 }
 
-class ShoppingList extends StatelessWidget {
-  ShoppingList({super.key});
+class HomePage extends StatefulWidget{
+  const HomePage ({super.key});
+
+  @override
+  State<HomePage> createState() => _ShoppingList();
+  
+}
+
+
+class _ShoppingList extends State<HomePage> {
+  
   // da questo ci prendiamo l'input dell'utente
-  final TextEditingController controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
+
+
+  @override
+  void initState(){
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose(){
+    controller.dispose();
+    super.dispose();
+  }
+
 
   // questa è la funzione che verrà chiamata alla pressione del pulsante
 
@@ -60,6 +83,9 @@ class ShoppingList extends StatelessWidget {
                   shoppingList[newListName] =
                       []; // creiamo nella map shopping list una nuova chiave alla quale associamo per ora come valore una lista vuota
                   print("Aggiunta nuova lista: $newListName");
+                  setState((){
+                    shoppingList [newListName] = [];
+                  });
                 }
                 Navigator.pop(context);
               },
